@@ -92,16 +92,16 @@ const MainContent = ({
         {/* Progress Bar */}
         <div className="px-4 py-3">
           <div className="flex justify-between items-center mb-1">
-            <span className="text-sm font-medium text-gray-600">
+            <span className="text-sm font-medium text-gray-600 animate-fade-in">
               Course Completion
             </span>
-            <span className="text-sm font-medium text-blue-600">
+            <span className="text-sm font-medium text-blue-600 animate-count-up">
               {mockData.courseProgress}%
             </span>
           </div>
           <div className="w-full h-2.5 bg-gray-100 rounded-full overflow-hidden">
             <div
-              className="h-full bg-gradient-to-r from-blue-500 via-blue-600 to-indigo-600 rounded-full transition-all duration-500 shadow-lg"
+              className="h-full bg-gradient-to-r from-blue-500 via-blue-600 to-indigo-600 rounded-full transition-all duration-1000 ease-out animate-progress"
               style={{ width: `${mockData.courseProgress}%` }}
             ></div>
           </div>
@@ -196,9 +196,7 @@ const MainContent = ({
                 </button>
                 <div className="flex items-center gap-1 cursor-pointer hover:bg-gray-200 p-1.5 rounded transition-colors">
                   <Eye size={16} />
-                  <span className="text-sm whitespace-nowrap">
-                    Access to
-                  </span>
+                  <span className="text-sm whitespace-nowrap">Access to</span>
                   <ChevronDown size={16} />
                 </div>
                 <div className="flex items-center gap-1 cursor-pointer hover:bg-gray-200 p-1.5 rounded transition-colors">

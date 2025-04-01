@@ -8,6 +8,8 @@ import {
   Settings,
   HelpCircle,
   LogOut,
+  AlertCircle,
+  Info,
 } from "lucide-react";
 
 const Navbar = ({
@@ -68,8 +70,8 @@ const Navbar = ({
           </div>
 
           {showNotifications && (
-            <div className="absolute  right-0 mt-3 w-80 bg-white rounded-2xl shadow-2xl border border-blue-100 z-50 transform transition-all duration-300 ease-out origin-top">
-              <div className="p-4 border-gray-300 border-b flex justify-between items-center bg-gradient-to-r from-blue-50 to-white rounded-t-2xl">
+            <div className="absolute right-0 mt-3 w-80 bg-white rounded-2xl shadow-2xl border border-blue-100 z-50 transform transition-all duration-300 ease-out origin-top">
+              <div className="p-4 flex justify-between items-center bg-gradient-to-r from-blue-50 to-white rounded-t-2xl">
                 <h3 className="font-semibold text-gray-800">Notifications</h3>
                 <button
                   className="text-xs text-blue-600 cursor-pointer hover:text-blue-800 font-medium hover:underline"
@@ -78,13 +80,45 @@ const Navbar = ({
                   Mark all as read
                 </button>
               </div>
-              <div className="max-h-[calc(100vh-200px)] overflow-y-auto">
+              <div className="max-h-[calc(100vh-200px)] overflow-y-auto divide-y divide-gray-50">
                 {notifications.length === 0 ? (
                   <div className="p-4 text-center text-gray-500">
                     No notifications
                   </div>
                 ) : (
-                  notifications.map(renderNotification)
+                  <div className="space-y-1">
+                    {notifications.map((notification) => (
+                      <div
+                        key={notification.id}
+                        className={`p-4 hover:bg-gray-50/80 transition-all duration-300 cursor-pointer ${
+                          !notification.read ? 'bg-blue-50/50' : ''
+                        }`}
+                      >
+                        <div className="flex gap-3">
+                          <div className={`mt-0.5 ${
+                            notification.type === 'warning' ? 'text-amber-500' : 'text-blue-500'
+                          }`}>
+                            {notification.type === 'warning' ? (
+                              <AlertCircle size={20} />
+                            ) : (
+                              <Info size={20} />
+                            )}
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <p className="text-sm font-medium text-gray-900">
+                              {notification.title}
+                            </p>
+                            <p className="text-sm text-gray-600 mt-0.5">
+                              {notification.message}
+                            </p>
+                            <p className="text-xs text-gray-500 mt-1">
+                              {notification.time}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 )}
               </div>
               <div className="p-4 bg-gradient-to-r from-blue-50 to-white rounded-b-2xl">

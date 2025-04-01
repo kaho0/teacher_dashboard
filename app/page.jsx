@@ -58,7 +58,7 @@ export default function Page() {
       id: 1,
       title: "Chapter 1.1",
       type: "folder",
-      isExpanded: true,
+      isExpanded: false,
       info: {
         createdOn: "25/02/2025 10:35 pm",
         createdBy: "Sir",
