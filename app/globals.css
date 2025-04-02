@@ -1,2 +1,16 @@
 @import "tailwindcss";
 
+body {
+    font-family: var(--font-roboto), sans-serif;
+  }
+  
+  .mono-text {
+    font-family: var(--font-geist-mono), monospace;
+  }
+  
+  .sans-text {
+    font-family: var(--font-geist-sans), sans-serif;
+  }
+  .raleway-text {
+    font-family: var(--font-raleway), sans-serif;
+  }

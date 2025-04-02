@@ -15,7 +15,7 @@ import {
   Info,
   ChevronLeft,
   CircleEllipsis,
-  ArrowLeft
+  ArrowLeft,
 } from "lucide-react";
 
 const MainContent = ({
@@ -53,14 +53,12 @@ const MainContent = ({
               </div>
               <div className="border-l h-6 hidden md:block border-gray-300"></div>
               <div className="flex items-center gap-2 cursor-pointer hover:bg-gray-50 p-2 rounded-lg">
-                <span className="font-medium text-gray-900">
-                  All Batches
-                </span>
+                <span className="font-medium text-gray-900">All Batches</span>
                 <ChevronDown size={16} className="text-gray-500" />
               </div>
             </div>
             <div className="flex gap-2 w-full md:w-auto">
-              <button className="flex-1 md:flex-initial flex items-center bg-blue-700 justify-center gap-2  text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-all duration-300">
+              <button className="flex-1 md:flex-initial flex items-center bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-800 hover:from-blue-700 hover:via-blue-800 hover:to-indigo-900 justify-center gap-2 text-white px-4 py-2 rounded-lg transition-all duration-300 shadow-lg hover:shadow-blue-500/25">
                 <MonitorPlay size={20} />
                 <span>Take Class</span>
               </button>
@@ -95,15 +93,17 @@ const MainContent = ({
             <span className="text-sm font-medium text-gray-600 animate-fade-in">
               Course Completion
             </span>
-            <span className="text-sm font-medium text-blue-600 animate-count-up">
+            <span className="text-sm font-medium bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent animate-count-up">
               {mockData.courseProgress}%
             </span>
           </div>
-          <div className="w-full h-2.5 bg-gray-100 rounded-full overflow-hidden">
+          <div className="w-full h-2.5 bg-gray-100 rounded-full overflow-hidden shadow-inner">
             <div
-              className="h-full bg-gradient-to-r from-blue-500 via-blue-600 to-indigo-600 rounded-full transition-all duration-1000 ease-out animate-progress"
+              className="h-full bg-gradient-to-r from-blue-500 via-blue-600 to-indigo-600 rounded-full transition-all duration-1000 ease-out animate-progress shadow-lg relative"
               style={{ width: `${mockData.courseProgress}%` }}
-            ></div>
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent"></div>
+            </div>
           </div>
         </div>
 
@@ -170,16 +170,18 @@ const MainContent = ({
               <div className="flex flex-wrap items-center gap-x-1">
                 <a
                   href="#"
-                  className="flex items-center text-blue-600 hover:text-blue-800 transition-colors font-medium"
+                  className="flex items-center font-bold text-blue-600 hover:text-blue-800 transition-colors font-bold"
                 >
                   <span>Chapter 1</span>
                   <ChevronRight size={16} />
                 </a>
                 <a
                   href="#"
-                  className="flex items-center text-blue-600 hover:text-blue-800 transition-colors font-medium"
+                  className="flex items-center text-blue-600 hover:text-blue-800 transition-colors font-medium group"
                 >
-                  <span>Chapter 1.1</span>
+                  <span className="relative font-bold after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-blue-600 after:transform after:scale-x-0 after:origin-left after:transition-transform group-hover:after:scale-x-100">
+                    Chapter 1.1
+                  </span>
                   <ChevronRight size={16} />
                 </a>
               </div>
@@ -209,7 +211,12 @@ const MainContent = ({
             {/* Chapters List */}
             <div className="border rounded border-gray-300 shadow-sm bg-white">
               {chapters.map((chapter) => (
-                <div key={chapter.id} className={chapter.type === 'folder' ? 'border-b border-gray-300' : ''}>
+                <div
+                  key={chapter.id}
+                  className={
+                    chapter.type === "folder" ? "border-b border-gray-300" : ""
+                  }
+                >
                   <div className="flex items-center justify-between p-4">
                     <div className="flex items-center">
                       <input
@@ -217,32 +224,34 @@ const MainContent = ({
                         className="h-4 w-4 mr-3 rounded border-gray-300 text-blue-600"
                       />
                       <div className="flex items-center">
-                        {chapter.type === 'folder' ? (
+                        {chapter.type === "folder" ? (
                           <Folder size={20} className="text-gray-500 mr-3" />
                         ) : (
                           <FileText size={20} className="text-gray-500 mr-3" />
                         )}
-                        <span className="font-medium mr-2">{chapter.title}</span>
-                        {chapter.type === 'folder' && (
-                          <button 
+                        <span className={`font-medium mr-2 hover:text-blue-600 transition-colors ${chapter.isExpanded ? 'text-blue-600' : 'text-gray-900'}`}>
+                          {chapter.title}
+                        </span>
+                        {chapter.type === "folder" && (
+                          <button
                             className="hover:bg-gray-100 rounded p-0.5"
                             onClick={() => toggleChapterExpand(chapter.id)}
                           >
                             {chapter.isExpanded ? (
-                              <ChevronUp size={16} className="text-gray-500" />
+                              <ChevronUp size={16} className={`transition-colors ${chapter.isExpanded ? 'text-blue-600' : 'text-gray-500'}`} />
                             ) : (
-                              <ChevronDown size={16} className="text-gray-500" />
+                              <ChevronDown size={16} className={`transition-colors ${chapter.isExpanded ? 'text-blue-600' : 'text-gray-500'}`} />
                             )}
                           </button>
                         )}
                       </div>
                     </div>
-                    
+
                     <div className="flex items-center gap-3">
                       <button onClick={(e) => handleFileInfoClick(chapter, e)}>
                         <Info size={20} className="text-gray-500" />
                       </button>
-                      <div 
+                      <div
                         className="flex items-center gap-1 text-xs text-gray-500 cursor-pointer"
                         onClick={(e) => handleAccessClick(chapter, e)}
                       >
@@ -250,7 +259,7 @@ const MainContent = ({
                         <span>Access to</span>
                         <ChevronDown size={14} />
                       </div>
-                      <div 
+                      <div
                         className="flex items-center gap-1 text-xs text-gray-500 cursor-pointer"
                         onClick={(e) => handleActionsClick(chapter, e)}
                       >
@@ -259,41 +268,72 @@ const MainContent = ({
                       </div>
                     </div>
                   </div>
-                  
-                  {chapter.type === 'folder' && chapter.isExpanded && (
+
+                  {chapter.type === "folder" && chapter.isExpanded && (
                     <div className="flex flex-col">
-                      <div className="flex border-t border-gray-300">
+                      <div className="flex flex-col lg:flex-row border-t border-gray-300">
+                        {/* Left side - Visible to (full width on small/medium, normal on large) */}
                         <div className="flex-1 p-4 flex items-end">
                           <div>
-                            <div className="text-xs text-gray-500">Visible to:</div>
-                            <div className="text-xs text-gray-600 italic">{chapter.info.visibleTo}</div>
+                            <div className="text-xs text-gray-500">
+                              Visible to:
+                            </div>
+                            <div className="text-xs text-gray-600 italic">
+                              {chapter.info.visibleTo}
+                            </div>
                           </div>
                         </div>
-                        <div className="flex bg-gray-50 ml-auto w-1/4">
+
+                        {/* Right side - Details (full width on small/medium, 1/4 width on large) */}
+                        <div className="w-full lg:w-1/4 bg-gray-50">
                           <div className="flex-1 p-4">
                             <div>
-                              <div className="text-xs text-gray-500">Created on:</div>
-                              <div className="text-sm font-medium">{chapter.info.createdOn}</div>
+                              <div className="text-xs font-bold text-blue-600">
+                                Created on:
+                              </div>
+                              <div className="text-sm text-gray-500">
+                                {chapter.info.createdOn}
+                              </div>
                             </div>
                             <div className="mt-1">
-                              <div className="text-xs text-gray-500">Created by:</div>
-                              <div className="text-sm font-medium">{chapter.info.createdBy}</div>
+                              <div className="text-xs font-bold text-blue-600">
+                                Created by:
+                              </div>
+                              <div className="text-sm text-gray-500">
+                                {chapter.info.createdBy}
+                              </div>
                             </div>
                             <div className="mt-1">
-                              <div className="text-xs text-gray-500">Last Modified:</div>
-                              <div className="text-sm font-medium">{chapter.info.lastModified}</div>
+                              <div className="text-xs font-bold text-blue-600">
+                                Last Modified:
+                              </div>
+                              <div className="text-sm text-gray-500">
+                                {chapter.info.lastModified}
+                              </div>
                             </div>
                             <div className="mt-1">
-                              <div className="text-xs text-gray-500">Last Modified by:</div>
-                              <div className="text-sm font-medium">{chapter.info.lastModifiedBy}</div>
+                              <div className="text-xs font-bold text-blue-600">
+                                Last Modified by:
+                              </div>
+                              <div className="text-sm text-gray-500">
+                                {chapter.info.lastModifiedBy}
+                              </div>
                             </div>
                             <div className="mt-1">
-                              <div className="text-xs text-gray-500">Kind:</div>
-                              <div className="text-sm font-medium">{chapter.info.kind}</div>
+                              <div className="text-xs font-bold text-blue-600">
+                                Kind:
+                              </div>
+                              <div className="text-sm text-gray-500">
+                                {chapter.info.kind}
+                              </div>
                             </div>
                             <div className="mt-1">
-                              <div className="text-xs text-gray-500">Size:</div>
-                              <div className="text-sm font-medium">{chapter.info.size}</div>
+                              <div className="text-xs font-bold text-blue-600">
+                                Size:
+                              </div>
+                              <div className="text-sm text-gray-500">
+                                {chapter.info.size}
+                              </div>
                             </div>
                           </div>
                           <div className="w-px bg-gray-200"></div>
